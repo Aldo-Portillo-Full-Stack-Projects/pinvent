@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const bcrypt = require("bcryptjs")
 
 const userSchema = mongoose.Schema({
     name: {
@@ -36,6 +37,19 @@ const userSchema = mongoose.Schema({
     },
 }, {
     timestamps: true,
+})
+
+//Encrypt pass before saving to DB using .pre()
+userSchema.pre("save", async function (next) {
+    //If password is not modified hash password
+    if(!this.isModified("password")) {
+        return next()
+    }
+    //Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(this.password, salt) //Password is this. because it is refernencing schema
+    this.password = hashedPassword
+    next()
 })
 
 const User = mongoose.model("User", userSchema)
