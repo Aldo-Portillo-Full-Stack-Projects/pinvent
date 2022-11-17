@@ -104,9 +104,20 @@ const loginUser = asyncHandler( async (req, res) => {
         throw new Error("Invalid Email or Password")
     }
 })
- 
+
+//Logout User
+const logout = asyncHandler( async (req, res) => {
+    res.cookie("token", "", { //MOdify cookie to expire it
+        path: "/",
+        httpOnly: true,
+        expires: new Date(0),
+        sameSite: "none", //Only used in deployment allows it to work on deployment
+        secure: true, //Only used in deployment
+    })
+    return res.status(200).json({ message: "Logged out Successfully"})
+})
 module.exports = {
     registerUser,
     loginUser,
-
+    logout,
 }
