@@ -121,7 +121,6 @@ const logout = asyncHandler( async (req, res) => {
 })
 
 //Create getUser data
-
 const getUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id)
 
@@ -137,7 +136,6 @@ const getUser = asyncHandler(async (req, res) => {
 })
 
 //Get login status
-
 const loginStatus = asyncHandler( async (req, res) => {
 
     const token = req.cookies.token;
@@ -234,14 +232,15 @@ const forgotPassword = asyncHandler( async (req, res) => {
     console.log("Reset Token: " + resetToken) //Delete in Production
     //Hash token before saving to DB
     const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex")
-
+    console.log("Hashed Token1: " + hashedToken)
     //Save token to DB
-    await new Token({
+    await Token.create({
         userId: user._id,
         token: hashedToken,
         createdAt: Date.now(),
         expiresAt: Date.now() + 30 * (60 * 1000) //Expires at 30min
     })
+    await user.save() 
 
     //Construct URL for resetting
     const resetUrl = `${process.env.CLIENT_URL}/resetpassword/${resetToken}/`
@@ -305,8 +304,6 @@ const resetPassword = asyncHandler(async(req, res) => {
     })
 })
 
-
-//Current Problem: resetPassword is not working because the Tokens are not being saved in the Database or expiring at 0 seconds
 module.exports = {
     registerUser,
     loginUser,
