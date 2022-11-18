@@ -12,11 +12,11 @@ const tokenSchema = mongoose.Schema({
 
     },
     createdAt: {
-        type: DataTransfer,
+        type: Date,
         required: true,
     },
     expiresAt: {
-        type: DataTransfer,
+        type: Date,
         required: true,
     },
 })
