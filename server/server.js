@@ -18,7 +18,6 @@ app.use(express.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
-
 //Routes Middleware
 app.use("/api/users", userRoute)
 app.use("/api/products", productRoute)

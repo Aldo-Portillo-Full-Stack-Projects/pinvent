@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler")
 const Product = require("../models/productModel")
+const { fileSizeFormatter } = require("../utils/fileUpload")
+const cloudinary = require("cloudinary").v2
 
 const createProduct = asyncHandler(async (req, res) => {
     const {name, sku, category, quantity, price, description} = req.body
@@ -11,6 +13,25 @@ const createProduct = asyncHandler(async (req, res) => {
     }
 
     //Image upload
+    let fileData = {}
+
+    if(req.file) {
+        //Save image to cloudinary
+        let uploadedFile;
+        try{
+            uploadedFile = await cloudinary.uploader.upload(req.file.path, {folder: "Pinvent App", resource_type: "image"})
+        } catch(err){
+            res.status(500)
+            throw new Error("image could not be uploaded")
+        }
+        
+        fileData = {
+            fileName: req.file.originalname,
+            filePath: uploadedFile.secure_url,
+            fileType: req.file.mimetype,
+            fileSize: fileSizeFormatter(req.file.size, 2),
+        }
+    }
 
     //Create Product
     const product = await Product.create({
@@ -21,7 +42,7 @@ const createProduct = asyncHandler(async (req, res) => {
         quantity,
         price,
         description,
-        //image,
+        image: fileData,
     })
 
     res.status(201).json(product)

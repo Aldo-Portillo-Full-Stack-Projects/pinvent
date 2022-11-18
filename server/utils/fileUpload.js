@@ -1,31 +1,34 @@
-const multer = require("multer")
+const multer = require("multer");
 
-//Define File Storage
-
+// Define file storage
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads')
-    },
-    filename: function (req, file, cb) {
-      cb(null, new Date().toISOString().replace(/:/g, "-") + "-" + file.originalname ) 
-    }
-  })
-  
-//Specify file format that can be saved
-function fileFilter (req, file, cb) {
+  destination: function (req, file, cb) {
+    cb(null, "uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      new Date().toISOString().replace(/:/g, "-") + "-" + file.originalname
+    ); // 23/08/2022
+  },
+});
 
-    if(file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "image/webp"){
-        cb(null, true)
-    } else {
-        cb(null, false)
-    }
-  
+// Specify file format that can be saved
+function fileFilter(req, file, cb) {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
   }
+}
 
-const upload = multer({ storage, fileFilter })
+const upload = multer({ storage, fileFilter });
 
-//File Size formatter
-
+// File Size Formatter
 const fileSizeFormatter = (bytes, decimal) => {
   if (bytes === 0) {
     return "0 Bytes";
@@ -38,4 +41,4 @@ const fileSizeFormatter = (bytes, decimal) => {
   );
 };
 
-module.exports = {upload, fileSizeFormatter}
+module.exports = { upload, fileSizeFormatter };
