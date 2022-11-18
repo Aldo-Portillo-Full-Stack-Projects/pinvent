@@ -58,12 +58,14 @@ const getProducts = asyncHandler(async (req, res) => {
 //Get single product
 const getProduct = asyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id)
+
+    //If product doesn't exist
     if(!product){
         res.status(404)
         throw new Error("Product not found")
     }
 
-
+    //Match product to user
     if(product.userId.toString() !== req.user.id){
         res.status(401) //Not authorized
         throw new Error("User not authorized")
@@ -71,8 +73,35 @@ const getProduct = asyncHandler(async (req, res) => {
 
     res.status(200).json(product)
 })
+
+//Delete Product
+const deleteProduct = asyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id)
+
+    //If product doesn't exist
+    if(!product){
+        res.status(404)
+        throw new Error("Product not found")
+    }
+
+    //Match product to user
+    if(product.userId.toString() !== req.user.id){
+        res.status(401) //Not authorized
+        throw new Error("User not authorized to delete product")
+    }
+    await product.remove()
+
+    res.status(200).json({message: "Product deleted successfully"})
+})
+
+//Update Product
+const updateProduct = asyncHandler(async (req, res) => {
+    res.send("UpdateProduct")
+})
 module.exports = {
     createProduct,
     getProducts,
-    getProduct
+    getProduct,
+    deleteProduct,
+    updateProduct
 }
