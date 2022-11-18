@@ -228,10 +228,10 @@ const forgotPassword = asyncHandler( async (req, res) => {
     if(token){
         await token.deleteOne()
     }
-    
+
     //Create reset token
     let resetToken = crypto.randomBytes(32).toString("hex") + user._id
-
+    console.log("Reset Token: " + resetToken) //Delete in Production
     //Hash token before saving to DB
     const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex")
 
@@ -270,6 +270,43 @@ const forgotPassword = asyncHandler( async (req, res) => {
     }
 })
 
+//Reset Password
+
+const resetPassword = asyncHandler(async(req, res) => {
+
+    const {password} = req.body
+    const {resetToken} = req.params //Params is the /:params of the route
+
+    console.log("passsword: " + password)
+    console.log("Reset Token from function: " + resetToken)
+    
+
+    //Hash token and compare it to DB token
+    const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex") //Hash reset token in params from the link sent to user
+
+    console.log("Hashed Token: " + hashedToken)
+    //Find DB token
+    const userToken = await Token.findOne({
+        token: hashedToken, //Find token
+        expiresAt: {$gt: Date.now()} //Check if token is greater than current time (expired)
+    })
+
+    if(!userToken){
+        res.status(404)
+        throw new Error("Invalid or Expired Link")
+    }
+
+    //Find User
+    const user = await User.findOne({_id: userToken.userId}) //Find user by userToken
+    user.password = password //Change user.password to oasswird passed in req.body
+    await user.save() //Save changes to DB
+    res.status(200).json({
+        message: "Password Reset Successful, Please Log in"
+    })
+})
+
+
+//Current Problem: resetPassword is not working because the Tokens are not being saved in the Database or expiring at 0 seconds
 module.exports = {
     registerUser,
     loginUser,
@@ -278,5 +315,6 @@ module.exports = {
     loginStatus,
     updateUser,
     changePassword,
-    forgotPassword
+    forgotPassword,
+    resetPassword
 }
