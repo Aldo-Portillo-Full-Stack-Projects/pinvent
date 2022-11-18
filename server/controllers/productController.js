@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler")
+const { reset } = require("nodemon")
 const Product = require("../models/productModel")
 const { fileSizeFormatter } = require("../utils/fileUpload")
 const cloudinary = require("cloudinary").v2
@@ -53,7 +54,25 @@ const getProducts = asyncHandler(async (req, res) => {
     const products = await Product.find({user: req.user.id}).sort("-createdAt") //get products from one user with newest at top
     res.status(200).json(products)
 })
+
+//Get single product
+const getProduct = asyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id)
+    if(!product){
+        res.status(404)
+        throw new Error("Product not found")
+    }
+
+
+    if(product.userId.toString() !== req.user.id){
+        res.status(401) //Not authorized
+        throw new Error("User not authorized")
+    }
+
+    res.status(200).json(product)
+})
 module.exports = {
     createProduct,
-    getProducts
+    getProducts,
+    getProduct
 }
