@@ -11,6 +11,10 @@ export default function Sidebar({children}) {
 
   const toggle = () => setIsOpen(!isOpen);
 
+  const renderMenuItems = menu.map((item, index) => {
+    return <SidebarItem key={index} item={item} isOpen={isOpen} />
+  })
+
   return (
     <div className='layout'>
         <div className='sidebar' style={{ width: isOpen ? "230px": "60px"}}>
@@ -22,8 +26,13 @@ export default function Sidebar({children}) {
                 <HiMenuAlt3 size={35} onClick = {toggle} style={{cursor: "pointer", }}/>
               </div>
             </div>
+            {renderMenuItems}
         </div>
-        <main>
+        <main style={{
+          paddingLeft: isOpen? "230px": "60px", 
+          transition: "all .5s"
+          }}
+        >
             {children}
         </main>
     </div>
