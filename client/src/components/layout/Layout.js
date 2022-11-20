@@ -6,7 +6,7 @@ export default function Layout({children}) {
   return (
     <>
         <Header />
-        <div style={{minHeight: "8-vh"}} className="--pad">{children}</div>
+          <div style={{minHeight: "8-vh"}} className="--pad">{children}</div>
         <Footer />
     </>
   )
