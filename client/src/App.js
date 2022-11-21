@@ -9,10 +9,16 @@ import Sidebar from './components/sidebar/Sidebar';
 import Layout from './components/layout/Layout';
 import Dashboard from './pages/dashboard/Dashboard';
 import axios from 'axios';
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+axios.defaults.withCredentials = true; //Anytime a request is made with axios we can save credentials
+
 
 function App() {
   return (
     <BrowserRouter>
+    <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
