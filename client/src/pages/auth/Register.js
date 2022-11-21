@@ -6,7 +6,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {validateEmail, registerUser} from "../../services/authService.js"
 import {useDispatch} from 'react-redux'
-import { SET_LOGIN, SET_NAME, SET_USER } from '../../redux/features/authSlice'
+import { SET_LOGIN, SET_NAME, SET_USER} from '../../redux/features/authSlice'
 
 
 const initialState = {
@@ -18,6 +18,8 @@ const initialState = {
 
 export default function Register() {
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [isLoading, setIsLoading] = React.useState(initialState)
   const [formData, setFormData] = React.useState(initialState)
   const { name, email, password, password2 } = formData
@@ -54,7 +56,9 @@ export default function Register() {
 
     try {
       const data = await registerUser(userData)
-      console.log(data)
+      await dispatch(SET_LOGIN(true))
+      await dispatch(SET_USER(data.name))
+      navigate("/dashboard")
       setIsLoading(false)
     } catch (err) {
       setIsLoading(false)
