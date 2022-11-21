@@ -20,3 +20,17 @@ export const registerUser = async (userData) => {
         
     }
 }
+
+export const loginUser = async (userData) => {
+    try{    
+        const response = await axios.post(`${BACKEND_URL}/api/users/login`, userData);
+        if (response.statusText === "OK") {
+            toast.success("Login Successful")
+        }
+        return response.data
+    } catch(err){
+        const message = (err.response && err.response.data && err.response.data.message)|| err.message || err.toString();
+        toast.err(err)
+        
+    }
+}
