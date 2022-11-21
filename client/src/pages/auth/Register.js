@@ -4,7 +4,29 @@ import { AiOutlineUserAdd } from "react-icons/ai"
 import Card from "../../components/card/Card"
 import {Link } from 'react-router-dom'
 
+const initialState = {
+  name: "",
+  email: "",
+  password: "",
+  password2: "",
+}
+
 export default function Register() {
+
+  const [isLoading, setIsLoading] = React.useState(initialState)
+  const [formData, setFormData] = React.useState(initialState)
+  const { name, email, password, password2 } = formData
+
+  const handleInputChange = (e) => {
+    const {name, value} = e.target;
+    setFormData({...formData, [name]: value})
+  }
+
+  const register = (e) => {
+    e.preventDefault()
+    console.log(formData)
+  }
+
   return (
     <div className={`container ${styles.auth}`}>
       <Card>
@@ -14,11 +36,11 @@ export default function Register() {
           </div>
           <h2>Register</h2>
 
-          <form>
-            <input type="text" placeholder='Name' required name="name" />
-            <input type="text" placeholder='Email' required name="email" />
-            <input type="password" placeholder='Password' required name="password" />
-            <input type="password" placeholder='Confirm Password' required name="confirmPassword" />
+          <form onSubmit={register}>
+            <input type="text" placeholder='Name' required name="name" value={name} onChange={handleInputChange}/>
+            <input type="text" placeholder='Email' required name="email" value={email} onChange={handleInputChange}/>
+            <input type="password" placeholder='Password' required name="password" value={password} onChange={handleInputChange}/>
+            <input type="password" placeholder='Confirm Password' required name="password2" value={password2} onChange={handleInputChange}/>
             <button type="submit" className='--btn --btn-primary --btn-block'>Register</button>
           </form>
 
