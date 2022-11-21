@@ -2,9 +2,12 @@ import React from 'react'
 import styles from "./auth.module.scss"
 import { AiOutlineUserAdd } from "react-icons/ai"
 import Card from "../../components/card/Card"
-import {Link } from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {validateEmail, registerUser} from "../../services/authService.js"
+import {useDispatch} from 'react-redux'
+import { SET_LOGIN, SET_NAME, SET_USER } from '../../redux/features/authSlice'
+
 
 const initialState = {
   name: "",
