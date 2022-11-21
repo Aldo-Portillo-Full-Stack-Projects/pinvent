@@ -44,3 +44,14 @@ export const logoutUser = async () => {
         
     }
 }
+
+export const forgotPassword = async () => {
+    try{    
+        const response = await axios.post(`${BACKEND_URL}/api/users/forgotpassword`);
+        toast.success(response.data.message);
+    } catch(err){
+        const message = (err.response && err.response.data && err.response.data.message)|| err.message || err.toString();
+        toast.err(message)
+        
+    }
+}
