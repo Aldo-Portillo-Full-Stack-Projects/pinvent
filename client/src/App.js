@@ -8,6 +8,7 @@ import Forgot from './pages/auth/Forgot';
 import Sidebar from './components/sidebar/Sidebar';
 import Layout from './components/layout/Layout';
 import Dashboard from './pages/dashboard/Dashboard';
+import axios from 'axios';
 
 function App() {
   return (
