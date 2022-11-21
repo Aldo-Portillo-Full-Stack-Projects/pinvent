@@ -15,7 +15,7 @@ export const registerUser = async (userData) => {
         }
         return response.data
     } catch(err){
-        const message = (err.response && err.response.data & err.response.data.message)|| err.message || err.toString();
+        const message = (err.response && err.response.data && err.response.data.message)|| err.message || err.toString();
         toast.err(err)
         
     }
