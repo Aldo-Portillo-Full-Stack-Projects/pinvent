@@ -11,11 +11,23 @@ import Dashboard from './pages/dashboard/Dashboard';
 import axios from 'axios';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
+import { getLoginStatus } from './services/authService';
+import { SET_LOGIN } from './redux/features/authSlice';
 
 axios.defaults.withCredentials = true; //Anytime a request is made with axios we can save credentials
 
 
 function App() {
+
+  const dispatch = useDispatch();
+  React.useEffect(()=> {
+    async function loginStatus() {
+      const status = await getLoginStatus()
+      dispatch(SET_LOGIN(status))
+    }
+    loginStatus()
+  }, [dispatch])
   return (
     <BrowserRouter>
     <ToastContainer />
