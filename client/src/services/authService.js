@@ -16,7 +16,7 @@ export const registerUser = async (userData) => {
         return response.data
     } catch(err){
         const message = (err.response && err.response.data && err.response.data.message)|| err.message || err.toString();
-        toast.err(err)
+        toast.err(message)
         
     }
 }
@@ -30,7 +30,17 @@ export const loginUser = async (userData) => {
         return response.data
     } catch(err){
         const message = (err.response && err.response.data && err.response.data.message)|| err.message || err.toString();
-        toast.err(err)
+        toast.err(message)
+        
+    }
+}
+
+export const logoutUser = async () => {
+    try{    
+        await axios.get(`${BACKEND_URL}/api/users/logout`);
+    } catch(err){
+        const message = (err.response && err.response.data && err.response.data.message)|| err.message || err.toString();
+        toast.err(message)
         
     }
 }
