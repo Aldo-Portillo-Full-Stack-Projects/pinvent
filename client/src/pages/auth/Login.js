@@ -4,6 +4,10 @@ import { BiLogIn} from "react-icons/bi"
 import Card from "../../components/card/Card"
 import {Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import {toast} from 'react-toastify'
+import { loginUser, validateEmail } from '../../services/authService'
+import { SET_LOGIN, SET_NAME } from '../../redux/features/authSlice'
+import Loader from '../../components/loader/Loader'
 
 
 const initialState = {
@@ -27,11 +31,34 @@ export default function Login() {
   const login = async (e) => {
     e.preventDefault();
 
-    console.log(formData)
+    if( !email || !password){
+      return toast.error("All fields are required")
+    }
+
+    if(!validateEmail(email)){
+      return toast.error("Please enter a valid email")
+    }
+
+    const userData = { email, password
+    }
+
+    setIsLoading(true)
+
+    try {
+      const data = await loginUser(userData)
+      console.log(data);
+      await dispatch(SET_LOGIN(true))
+      await dispatch(SET_NAME(data.name))
+      navigate("/dashboard")
+      setIsLoading(false)
+    } catch (err) {
+      setIsLoading(false)
+    }
   } 
 
   return (
     <div className={`container ${styles.auth}`}>
+      {isLoading && <Loader />}
       <Card>
         <div className={styles.form}>
           <div className='--flex-center'>
