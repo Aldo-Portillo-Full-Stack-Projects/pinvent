@@ -6,7 +6,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {validateEmail, registerUser} from "../../services/authService.js"
 import {useDispatch} from 'react-redux'
-import { SET_LOGIN, SET_NAME, SET_USER} from '../../redux/features/authSlice'
+import { SET_LOGIN, SET_NAME} from '../../redux/features/authSlice'
 import Loader from '../../components/loader/Loader'
 
 
