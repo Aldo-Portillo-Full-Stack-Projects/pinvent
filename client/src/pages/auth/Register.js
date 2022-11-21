@@ -7,6 +7,7 @@ import {toast} from 'react-toastify'
 import {validateEmail, registerUser} from "../../services/authService.js"
 import {useDispatch} from 'react-redux'
 import { SET_LOGIN, SET_NAME, SET_USER} from '../../redux/features/authSlice'
+import Loader from '../../components/loader/Loader'
 
 
 const initialState = {
@@ -20,7 +21,7 @@ export default function Register() {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [isLoading, setIsLoading] = React.useState(initialState)
+  const [isLoading, setIsLoading] = React.useState(false)
   const [formData, setFormData] = React.useState(initialState)
   const { name, email, password, password2 } = formData
 
@@ -57,7 +58,7 @@ export default function Register() {
     try {
       const data = await registerUser(userData)
       await dispatch(SET_LOGIN(true))
-      await dispatch(SET_USER(data.name))
+      await dispatch(SET_NAME(data.name))
       navigate("/dashboard")
       setIsLoading(false)
     } catch (err) {
@@ -68,6 +69,7 @@ export default function Register() {
 
   return (
     <div className={`container ${styles.auth}`}>
+      {isLoading && <Loader />}
       <Card>
         <div className={styles.form}>
           <div className='--flex-center'>
