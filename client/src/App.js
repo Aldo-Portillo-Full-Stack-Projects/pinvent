@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { getLoginStatus } from './services/authService';
 import { SET_LOGIN } from './redux/features/authSlice';
+import AddProduct from './pages/addProduct.js/AddProduct';
 
 axios.defaults.withCredentials = true; //Anytime a request is made with axios we can save credentials
 
@@ -42,6 +43,13 @@ function App() {
           <Sidebar>
             <Layout>
               <Dashboard />
+            </Layout>
+          </Sidebar>
+        } />
+        <Route path="/add-product" element={
+          <Sidebar>
+            <Layout>
+              <AddProduct />
             </Layout>
           </Sidebar>
         } />
