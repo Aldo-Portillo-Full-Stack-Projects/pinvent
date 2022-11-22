@@ -45,7 +45,8 @@ export default function Reset() {
     }
 
     try {
-      const data = await resetPassword(userData, resetToken);
+      await resetPassword(userData, resetToken);
+      navigate("/login")
       return toast.success("Password updated")
     } catch (err) {
       console.log(err.message)
