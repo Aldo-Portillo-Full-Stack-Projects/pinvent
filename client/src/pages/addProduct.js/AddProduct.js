@@ -3,6 +3,7 @@ import ProductForm from '../../components/productForm/ProductForm'
 import {useDispatch, useSelector} from 'react-redux'
 import {createProduct, selectIsLoading} from "../../redux/features/productSlice"
 import {useNavigate} from 'react-router-dom'
+import Loader from '../../components/loader/Loader'
 
 const initialState = {
     name: "",
@@ -44,7 +45,7 @@ export default function AddProduct() {
 
     const saveProduct = async (e) => {
         e.preventDefault();
-        const formData = new FormData()
+        const formData = new FormData() //This is done because the image will not be done before the new form data is created so we append as we go
         formData.append("name", name)
         formData.append("sku", generateSKU(category));
         formData.append("category", category)
@@ -62,6 +63,7 @@ export default function AddProduct() {
     }
   return (
     <div>
+        {isLoading && <Loader />}
         <h3 className='--mt'>Add New Product</h3>
         <ProductForm product={product} productImage={productImage} imagePreview={imagePreview} description={description} setDescription={setDescription} handleInputChange={handleInputChange} handleImageChange={handleImageChange} saveProduct={saveProduct}/>
     </div>
