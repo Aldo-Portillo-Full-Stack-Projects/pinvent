@@ -2,7 +2,7 @@ import React from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import "./ProductForm.scss"
-import Card from '../../components/card/Card'
+import Card from '../../card/Card'
 
 export default function ProductForm({passProps, handleImageChange, product, productImage, imagePreview, description, setDescription, handleInputChange, saveProduct}) {
 
