@@ -14,13 +14,13 @@ const initialState = {
 }
 export default function AddProduct() {
 
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const [product, setProduct] = React.useState(initialState)
     const [productImage, setProductImage] = React.useState("")
     const [imagePreview, setImagePreview] = React.useState(null)
     const [description, setDescription] = React.useState("")
-
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     const isLoading = useSelector(selectIsLoading) //Gets isLoading State from redux/features/productSlice
 
@@ -49,12 +49,10 @@ export default function AddProduct() {
         formData.append("name", name)
         formData.append("sku", generateSKU(category));
         formData.append("category", category)
-        formData.append("quantity", quantity)
+        formData.append("quantity", Number(quantity))
         formData.append("price", price)
         formData.append("description", description)
         formData.append("image", productImage)
-
-        console.log(...formData);
 
         await dispatch(createProduct(formData))
         navigate("/dashboard")
