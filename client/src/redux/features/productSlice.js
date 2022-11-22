@@ -59,4 +59,6 @@ const productSlice = createSlice({
 
 export const {CALC_STORE_VALUE} = productSlice.actions
 
+export const selectIsLoading = (state) => state.product.isLoading
+
 export default productSlice.reducer
