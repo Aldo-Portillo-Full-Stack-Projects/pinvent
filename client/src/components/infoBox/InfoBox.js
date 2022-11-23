@@ -1,7 +1,7 @@
 import React from 'react' 
 import "./InfoBox.scss"
 
-export default function infoBox({bgColor, count, title, icon}) {
+export default function InfoBox({bgColor, count, title, icon}) {
   return (
     <div className={`info-box ${bgColor}`}>
         <span className='--info-icon --color-white'>{icon}</span>
