@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ProductList from '../../components/product/ProductList/ProductList'
+import ProductSummary from '../../components/product/productSummary/ProductSummary'
 import { useRedirectLoggedOutUser } from '../../hooks/useRedirectLoggedOutUser'
 import { selectIsLoggedIn } from '../../redux/features/authSlice'
 import {getProducts} from '../../redux/features/productSlice'
@@ -25,7 +26,7 @@ export default function Dashboard() {
   },[isLoggedIn, isError, message, dispatch])
   return (
     <div>
-        <h2>Dashboard</h2>
+        <ProductSummary products={products}/>
         <ProductList products={products} isLoading={isLoading}/>
     </div>
   )
