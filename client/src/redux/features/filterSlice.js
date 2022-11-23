@@ -16,6 +16,6 @@ const filterSlice = createSlice({
 
 export const {FILTER_BY_SEARCH} = filterSlice.actions
 
-export const selectFilteredProduct = state.filter.filteredProducts
+export const selectFilteredProduct = (state) => state.filter.filteredProducts
 
 export default filterSlice.reducer
