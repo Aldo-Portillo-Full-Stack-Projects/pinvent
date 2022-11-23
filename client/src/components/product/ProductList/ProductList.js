@@ -3,8 +3,17 @@ import "./ProductList.scss"
 import { SpinnerImg } from '../../loader/Loader'
 import {FaEdit, FaTrashAlt} from 'react-icons/fa'
 import {AiOutlineEye} from 'react-icons/ai'
+import Search from '../../search/Search'
+import {useSelector, useDispatch} from 'react-redux'
+import { FILTER_BY_SEARCH, selectFilteredProduct } from '../../../redux/features/filterSlice'
+
 
 export default function ProductList({products, isLoading}) {
+
+  const [search, setSearch] = React.useState("")
+  const filteredProducts = useSelector(selectFilteredProduct);
+
+  const dispatch = useDispatch()
 
   const shortenText = (text, n) => {
     if(text.length > n){
@@ -13,7 +22,7 @@ export default function ProductList({products, isLoading}) {
     }
     return text
   }
-  const renderProducts = products.map((product, index) => {
+  const renderProducts = filteredProducts.map((product, index) => {
     const {_id, name, category, price, quantity} = product
     return (
       <tr key={_id}>
@@ -32,6 +41,9 @@ export default function ProductList({products, isLoading}) {
     )
   })
 
+  React.useEffect(() => {
+    dispatch(FILTER_BY_SEARCH({products, search}))
+  }, [products, search, dispatch])
   return (
     <div className='product-list'>
       <hr />
@@ -41,7 +53,7 @@ export default function ProductList({products, isLoading}) {
             <h3>Inventory Items</h3>
           </span>
           <span>
-            <h3>Search products</h3>
+            <Search value={search} onChange={(e) => setSearch(e.target.value)}/>
           </span>
         </div>
 
