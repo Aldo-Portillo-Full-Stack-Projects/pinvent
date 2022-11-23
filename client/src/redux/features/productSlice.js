@@ -81,6 +81,19 @@ const productSlice = createSlice({
       })
 
       state.outOfStock = count
+    },
+
+    CALC_CATEGORY(state, action) {
+      const products = action.payload
+      const categoryArr = [];
+      products.map((item) => {
+        const {category} = item;
+
+        return categoryArr.push(category)
+      })
+
+      const uniqueCategory = [...new Set(categoryArr)] //Filters out duplicates
+      state.category = uniqueCategory
     }
   },
   extraReducers: (builder) => {
@@ -125,6 +138,7 @@ const productSlice = createSlice({
 
 export const {CALC_STORE_VALUE} = productSlice.actions
 export const {CALC_OUTOFSTOCK} = productSlice.actions
+export const {CALC_CATEGORY} = productSlice.actions
 
 export const selectIsLoading = (state) => state.product.isLoading
 export const selectTotalStoreValue = (state) => state.product.totalStoreValue
