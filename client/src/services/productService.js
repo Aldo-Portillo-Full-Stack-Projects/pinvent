@@ -9,6 +9,13 @@ const createProduct = async (formData) => {
     return response.data
 }
 
+//Delete Product
+
+const deleteProduct = async (id) => {
+    const response = await axios.delete(`${BACKEND_URL}/api/products` + id)
+    return response.data
+}
+
 
 //Get All Products
 
@@ -19,8 +26,8 @@ const getProducts = async (formData) => {
 
 const productService = {
     createProduct,
-    getProducts
-
+    getProducts,
+    deleteProduct,
 }
 
 export default productService
