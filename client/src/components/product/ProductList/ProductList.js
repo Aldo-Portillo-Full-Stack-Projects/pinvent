@@ -41,6 +41,25 @@ export default function ProductList({products, isLoading}) {
     )
   })
 
+  //Start Copy React-Paginate Docs w/ Modifications
+
+  const [currentItems, setCurrentItems] = React.useState([]);
+  const [pageCount, setPageCount] = React.useState(0);
+  const [itemOffset, setItemOffset] = React.useState(0);
+  const itemsPerPage = 1 //Maybe make this 10
+
+  React.useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems(filteredProducts.slice(itemOffset, endOffset))
+    setPageCount(Math.ceil(filteredProducts.length / itemsPerPage))
+  }, [itemOffset, itemsPerPage])
+  
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % filteredProducts.length;
+    setItemOffset(newOffset);
+  }
+  //End Copy React-Paginate Docs
+
   React.useEffect(() => {
     dispatch(FILTER_BY_SEARCH({products, search}))
   }, [products, search, dispatch])
