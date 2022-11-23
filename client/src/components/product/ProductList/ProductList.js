@@ -6,12 +6,14 @@ import {AiOutlineEye} from 'react-icons/ai'
 import Search from '../../search/Search'
 import {useSelector, useDispatch} from 'react-redux'
 import { FILTER_BY_SEARCH, selectFilteredProduct } from '../../../redux/features/filterSlice'
+import ReactPaginate from 'react-paginate'
 
 
 export default function ProductList({products, isLoading}) {
 
   const [search, setSearch] = React.useState("")
   const filteredProducts = useSelector(selectFilteredProduct);
+  const [currentItems, setCurrentItems] = React.useState([]);
 
   const dispatch = useDispatch()
 
@@ -22,7 +24,7 @@ export default function ProductList({products, isLoading}) {
     }
     return text
   }
-  const renderProducts = filteredProducts.map((product, index) => {
+  const renderProducts = currentItems.map((product, index) => {
     const {_id, name, category, price, quantity} = product
     return (
       <tr key={_id}>
@@ -43,16 +45,16 @@ export default function ProductList({products, isLoading}) {
 
   //Start Copy React-Paginate Docs w/ Modifications
 
-  const [currentItems, setCurrentItems] = React.useState([]);
+  
   const [pageCount, setPageCount] = React.useState(0);
   const [itemOffset, setItemOffset] = React.useState(0);
-  const itemsPerPage = 1 //Maybe make this 10
+  const itemsPerPage = 5 //Maybe make this 10
 
   React.useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
     setCurrentItems(filteredProducts.slice(itemOffset, endOffset))
     setPageCount(Math.ceil(filteredProducts.length / itemsPerPage))
-  }, [itemOffset, itemsPerPage])
+  }, [itemOffset, itemsPerPage, filteredProducts])
   
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % filteredProducts.length;
@@ -99,6 +101,20 @@ export default function ProductList({products, isLoading}) {
             </table>
           )}
         </div>
+        <ReactPaginate
+        breakLabel="..."
+        nextLabel="Next >"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={5}
+        pageCount={pageCount}
+        previousLabel="< Prev"
+        renderOnZeroPageCount={null}
+        containerClassName="pagination"
+        pageLinkClassName='page-num'
+        previousLinkClassName='page-num'
+        nextLinkClassName='page-num'
+        activeLinkClassName='active'
+      />
       </div>
     </div>
   )
