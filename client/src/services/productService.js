@@ -12,7 +12,7 @@ const createProduct = async (formData) => {
 //Delete Product
 
 const deleteProduct = async (id) => {
-    const response = await axios.delete(`${BACKEND_URL}/api/products` + id)
+    const response = await axios.delete(`${BACKEND_URL}/api/products/` + id)
     return response.data
 }
 
@@ -20,7 +20,7 @@ const deleteProduct = async (id) => {
 //Get All Products
 
 const getProducts = async (formData) => {
-    const response = await axios.get(`${BACKEND_URL}/api/products`)
+    const response = await axios.get(`${BACKEND_URL}/api/products/`)
     return response.data
 }
 
