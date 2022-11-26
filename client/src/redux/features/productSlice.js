@@ -208,6 +208,22 @@ const productSlice = createSlice({
             state.message = action.payload
             toast.error(action.payload)
           })
+          //Update product cases
+          .addCase(updateProduct.pending, (state) => {
+            state.isLoading = true
+          })
+          .addCase(updateProduct.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.isError = false
+            toast.success("Product Updated Successfully")
+          })
+          .addCase(updateProduct.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+            toast.error(action.payload)
+          })
           
   }
 });
