@@ -59,6 +59,20 @@ export const deleteProduct = createAsyncThunk(
   }
 )
 
+//Get a product
+export const getProduct = createAsyncThunk(
+  "products/getProduct",
+  async (id, thunkAPI) => {
+    try {
+      return await productService.getProduct(id)
+    } catch (err) {
+      const message = (err.response && err.response.data && err.response.data.message)|| err.message || err.toString();
+      console.log(message)
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 
 
 const productSlice = createSlice({
