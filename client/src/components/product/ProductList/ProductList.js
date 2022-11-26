@@ -61,7 +61,7 @@ export default function ProductList({products, isLoading}) {
         <td>{quantity * price}</td>
         <td className='icons'>
             <Link to={`/product-detail/${_id}`}><AiOutlineEye size={25} color={"purple"} /></Link>
-            <FaEdit size={20} color={"green"}/> 
+            <Link to={`/edit-product/${_id}`}><FaEdit size={20} color={"green"}/></Link>
             <FaTrashAlt size={20} color={"red"} onClick={() => confirmDelete(_id)}/>
         </td>
       </tr>
