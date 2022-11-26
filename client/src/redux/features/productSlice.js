@@ -73,6 +73,21 @@ export const getProduct = createAsyncThunk(
   }
 )
 
+//Update Product
+export const updateProduct = createAsyncThunk(
+  "products/updateProduct",
+  async ({id, formData}, thunkAPI) => {
+    try {
+      return await productService.updateProduct(id, formData)
+    } catch (err) {
+      const message = (err.response && err.response.data && err.response.data.message)|| err.message || err.toString();
+      console.log(message)
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+
 
 
 const productSlice = createSlice({
