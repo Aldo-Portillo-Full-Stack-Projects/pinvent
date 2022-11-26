@@ -177,6 +177,22 @@ const productSlice = createSlice({
             state.message = action.payload
             toast.error(action.payload)
           })
+          //Get Product cases
+          .addCase(getProduct.pending, (state) => {
+            state.isLoading = true
+          })
+          .addCase(getProduct.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.isError = false
+            state.product = action.payload
+          })
+          .addCase(getProduct.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+            toast.error(action.payload)
+          })
           
   }
 });
