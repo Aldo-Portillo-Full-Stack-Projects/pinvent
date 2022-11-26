@@ -32,11 +32,18 @@ const getProducts = async (formData) => {
     return response.data
 }
 
+//Update Product
+
+const updateProduct = async (id, formData) => {
+    const response = await axios.patch(`${BACKEND_URL}/api/products/`, formData)
+    return response.data
+}
 const productService = {
     createProduct,
     getProducts,
     deleteProduct,
     getProduct,
+    updateProduct,
 }
 
 export default productService
