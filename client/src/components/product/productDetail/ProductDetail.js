@@ -7,6 +7,7 @@ import { selectIsLoggedIn } from '../../../redux/features/authSlice'
 import { getProduct } from '../../../redux/features/productSlice' 
 import Card from '../../card/Card'
 import { SpinnerImg } from '../../loader/Loader'
+import DOMPurify from 'dompurify'
 
 //Filter through redux is not a good option because we have to refresh page since all states are lost 
 export default function ProductDetail() {
@@ -57,6 +58,13 @@ export default function ProductDetail() {
             <p><b>&rarr; Price:</b> {'$'}{product.price}</p>
             <p><b>&rarr; Quantity in Stock:</b> {product.quantity}</p>
             <p><b>&rarr; Total Stock Value:</b> {'$'}{product.price * product.quantity}</p>
+            <hr />
+            <div dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(product.description)
+            }}></div>
+            <hr />
+            {/* <code className='--color-dark'>Created on: {product.createdAt.toLocaleString("en-US")}</code>
+            <code className='--color-dark'>Previously Updated: {product.updatedAt.toLocaleString("en-US")}</code> */}
           </div>
         )}
       </Card>
