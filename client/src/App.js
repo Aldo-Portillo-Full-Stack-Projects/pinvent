@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { getLoginStatus } from './services/authService';
 import { SET_LOGIN } from './redux/features/authSlice';
 import AddProduct from './pages/addProduct.js/AddProduct';
+import ProductDetail from './components/product/productDetail/ProductDetail';
 
 axios.defaults.withCredentials = true; //Anytime a request is made with axios we can save credentials
 
@@ -50,6 +51,13 @@ function App() {
           <Sidebar>
             <Layout>
               <AddProduct />
+            </Layout>
+          </Sidebar>
+        } />
+        <Route path="/product-detail/:id" element={
+          <Sidebar>
+            <Layout>
+              <ProductDetail />
             </Layout>
           </Sidebar>
         } />
