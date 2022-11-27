@@ -4,7 +4,6 @@ import {AiFillDollarCircle} from "react-icons/ai"
 import {BiCategory} from "react-icons/bi"
 import {BsCart4, BsCartX} from "react-icons/bs"
 import InfoBox from '../../infoBox/InfoBox'
-import productService from '../../../services/productService'
 import { useDispatch, useSelector } from 'react-redux'
 import { CALC_CATEGORY, CALC_OUTOFSTOCK, CALC_STORE_VALUE, selectCategory, selectOutOfStock, selectTotalStoreValue } from '../../../redux/features/productSlice'
 

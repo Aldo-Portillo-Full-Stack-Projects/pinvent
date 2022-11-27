@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Card from '../../components/card/Card'
@@ -80,7 +80,7 @@ export default function EditProfile() {
 
             }
 
-            const data = await updateUser(formData)
+            await updateUser(formData)
             toast.success("User Updated")
             navigate("/profile")
             setIsLoading(false)

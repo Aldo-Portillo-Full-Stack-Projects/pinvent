@@ -23,7 +23,7 @@ export default function Dashboard() {
     if(isError) {
       console.log(message);
     }
-  },[isLoggedIn, isError, message, dispatch])
+  },[isLoggedIn, isError, message, dispatch, products])
   return (
     <div>
         <ProductSummary products={products}/>
