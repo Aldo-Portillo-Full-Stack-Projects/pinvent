@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Card from '../../components/card/Card'
+import ChangePassword from '../../components/changePassword/ChangePassword'
 import Loader from '../../components/loader/Loader'
 import { useRedirectLoggedOutUser } from '../../hooks/useRedirectLoggedOutUser'
 import { selectUser } from '../../redux/features/authSlice'
@@ -128,6 +129,8 @@ export default function EditProfile() {
                 </span>
                 </form>
             </Card>
+            <br />
+            <ChangePassword />
     </div>
   )
 }
