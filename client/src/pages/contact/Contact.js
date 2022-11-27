@@ -1,8 +1,11 @@
+import axios from 'axios'
 import React from 'react'
 import { FaEnvelope, FaPhoneAlt, FaTwitter } from 'react-icons/fa'
 import {GoLocation} from 'react-icons/go'
+import { toast } from 'react-toastify'
 import Card from '../../components/card/Card'
 import "./Contact.scss"
+
 export default function Contact() {
 
     const [subject, setSubject] = React.useState("")
@@ -13,8 +16,17 @@ export default function Contact() {
         message
     }
 
-    const sendEmail = (e) => {
+    const sendEmail = async (e) => {
         e.preventDefault()
+
+        try {
+            const response = await axios.post(`http://localhost:5000/api/contactus`, data)
+            toast.success(response.data.message)
+            setSubject("")
+            setMessage("")
+        } catch (err) {
+            toast.error(err.message)
+        }
     }
   return (
     <div className='contact'>
