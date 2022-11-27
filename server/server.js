@@ -18,7 +18,7 @@ app.use(cookieParser())
 app.use(express.urlencoded({extended: false}))
 app.use(bodyParser.json())
 app.use(cors({
-    origin: ["http://localhost:3000"], //Make sure to add url to active site here
+    origin: ["http://localhost:3000", "https://pinvent-portillo.vercel.app/"], //Make sure to add url to active site here
     credentials: true
 }))
 
