@@ -103,3 +103,15 @@ export const updateUser = async (formData) => {
         
     }
 }
+
+//Change password
+export const changePassword = async (formData) => {
+    try{    
+        const response = await axios.patch(`${BACKEND_URL}/api/users/changepassword`, formData);
+        return response.data
+    } catch(err){
+        const message = (err.response && err.response.data && err.response.data.message)|| err.message || err.toString();
+        toast.err(message)
+        
+    }
+}
