@@ -90,3 +90,16 @@ export const getUser = async () => {
         
     }
 }
+
+//Update user Profile
+
+export const updateUser = async (formData) => {
+    try{    
+        const response = await axios.patch(`${BACKEND_URL}/api/users/updateuser`, formData);
+        return response.data
+    } catch(err){
+        const message = (err.response && err.response.data && err.response.data.message)|| err.message || err.toString();
+        toast.err(message)
+        
+    }
+}

@@ -1,10 +1,12 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import Card from '../../components/card/Card'
 import Loader from '../../components/loader/Loader'
 import { useRedirectLoggedOutUser } from '../../hooks/useRedirectLoggedOutUser'
 import { selectUser } from '../../redux/features/authSlice'
+import { updateUser } from '../../services/authService'
 import "./Profile.scss"
 
 
@@ -34,7 +36,7 @@ export default function EditProfile() {
     const [isLoading, setIsLoading] = React.useState(false)
 
     const handleInputChange = (e) => {
-        const {name, value} = e.targetl;
+        const {name, value} = e.target;
         setProfile({...profile, [name]: value})
     }
 
@@ -42,8 +44,50 @@ export default function EditProfile() {
         setProfileImage(e.target.files[0])
     }
 
-    const saveProfile = (e) => {
+    const saveProfile = async (e) => {
         e.preventDefault()
+
+        setIsLoading(true);
+
+        try {
+            //Handle Image Upload to Cloudinary
+
+            let imageURL;
+            if(profileImage && (profileImage.type === "image/jpeg" || profileImage.type === "image/jpg" || profileImage.type === "image/png")){
+                const image = new FormData();
+                image.append("file", profileImage)
+                image.append("cloud_name", "dkhtrg1ts")
+                image.append("upload_preset", "lwbx6xdy")
+
+                //Save image to cloudinary
+
+                const response = await fetch(
+                    "https://api.cloudinary.com/v1_1/dkhtrg1ts/image/upload", {method: "post", body: image}
+                )
+                const imgData = await response.json()
+                imageURL = imgData.url.toString()
+                
+                
+                //Save Profile
+
+                const formData = {
+                    name: profile.name,
+                    email: profile.email,
+                    phone: profile.phone,
+                    bio: profile.bio,
+                    photo: profileImage ? imageURL : profile.photo
+
+                }
+
+                const data = await updateUser(formData)
+                toast.success("User Updated")
+                navigate("/profile")
+                setIsLoading(false)
+            }
+        } catch (err) {
+            setIsLoading(false)
+            toast.error(err.message)
+        }
     }
   return (
     <div className='profile --my2'>
@@ -78,7 +122,7 @@ export default function EditProfile() {
                     </p>
                     <div>
                         <Link to="/edit-profile">
-                            <button className='--btn --btn-primary'>Edit Profile</button>
+                            <button className='--btn --btn-primary' onClick={saveProfile}>Edit Profile</button>
                         </Link>
                     </div>
                 </span>
