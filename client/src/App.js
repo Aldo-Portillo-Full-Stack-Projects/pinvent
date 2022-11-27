@@ -19,6 +19,7 @@ import ProductDetail from './components/product/productDetail/ProductDetail';
 import EditProduct from './pages/editProduct/EditProduct';
 import Profile from './pages/profile/Profile';
 import EditProfile from './pages/profile/EditProfile';
+import Contact from './pages/contact/Contact';
 
 axios.defaults.withCredentials = true; //Anytime a request is made with axios we can save credentials
 
@@ -82,6 +83,13 @@ function App() {
           <Sidebar>
             <Layout>
               <EditProfile />
+            </Layout>
+          </Sidebar>
+        } />
+        <Route path="/contact-us" element={
+          <Sidebar>
+            <Layout>
+              <Contact />
             </Layout>
           </Sidebar>
         } />
