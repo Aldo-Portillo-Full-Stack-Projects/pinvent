@@ -22,8 +22,6 @@ app.use(cors({
     credentials: true
 }))
 
-https://pinvent-aakulh9ul-aldoportillo.vercel.app/
-https://pinvent-portillo.vercel.app/
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 //Routes Middleware
