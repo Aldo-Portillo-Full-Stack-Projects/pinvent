@@ -67,23 +67,23 @@ export default function EditProfile() {
                 const imgData = await response.json()
                 imageURL = imgData.url.toString()
                 
-                
+                }
                 //Save Profile
 
-                const formData = {
-                    name: profile.name,
-                    email: profile.email,
-                    phone: profile.phone,
-                    bio: profile.bio,
-                    photo: profileImage ? imageURL : profile.photo
+            const formData = {
+                name: profile.name,
+                email: profile.email,
+                phone: profile.phone,
+                bio: profile.bio,
+                photo: profileImage ? imageURL : profile.photo
 
-                }
-
-                const data = await updateUser(formData)
-                toast.success("User Updated")
-                navigate("/profile")
-                setIsLoading(false)
             }
+
+            const data = await updateUser(formData)
+            toast.success("User Updated")
+            navigate("/profile")
+            setIsLoading(false)
+            
         } catch (err) {
             setIsLoading(false)
             toast.error(err.message)
